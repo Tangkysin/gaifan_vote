@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row justify-around">
+  <q-page class="row justify-around q-pt-md">
     <div class="col-md-2 col-xs-10 cloumn q-gutter-y-sm">
       <q-scroll-area
         style="height: 800px; "
@@ -23,7 +23,7 @@
         </div>
       </q-scroll-area>
     </div>
-    <div class="col-md-8 ">
+    <div class="col-md-8">
       <q-card v-if="$q.platform.is.desktop" style="height: 600px" flat>
         <div id="vote_detail_div" class="full-height full-width"></div>
       </q-card>
