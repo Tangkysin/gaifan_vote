@@ -9,7 +9,7 @@ dispatcher_host = ["hd-cx-03"]
 def build():
     script_path = os.path.dirname(__file__)
     os.chdir(os.path.join(script_path, "../"))
-    # os.system("quasar build")
+    os.system("quasar build")
 
 
 def deploy():
