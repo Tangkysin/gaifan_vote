@@ -1,6 +1,7 @@
 # 吃遍盖饭 (gaifan_vote)
 
-A Quasar Framework app
+虎扑吃遍盖饭投票汇总
+欢迎fork继续加料
 
 ## Install the dependencies
 ```bash
