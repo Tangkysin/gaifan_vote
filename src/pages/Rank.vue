@@ -52,7 +52,7 @@
 
     <div class="col-md-4 col-xs-12">
       <div class="row">
-        <span class="text-h6">总共花费{{ totalCost }}元</span>
+        <span class="text-h6">收录盖饭{{kindsNum}}种,总共花费{{ totalCost }}元</span>
       </div>
       <div class="row">
         <q-card style="height: 400px" class="full-width" flat>
@@ -77,6 +77,7 @@ export default {
       totalPointRank: null,
       heatRank: null,
       costPerformanceRank: null,
+      kindsNum: 0,
       totalCost: 0,
       priceDistmap: {},
       priceDistChart: null,
@@ -213,6 +214,7 @@ export default {
 
       let point = vote_data[key].avg.toFixed(5);
       this.pricePointDist.push([vote_data[key].cost, point, vote_data[key].gaifan_name]);
+      this.kindsNum +=1
     }
 
     this.renderRank(vote_data_array);
