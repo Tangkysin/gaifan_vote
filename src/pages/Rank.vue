@@ -1,6 +1,6 @@
 <template>
-  <q-page class="row q-gutter-x-md q-pa-xl">
-    <div class="col-2" v-if="totalPointRank != null">
+  <q-page class="row q-gutter-md q-pa-xl">
+    <div class="col-2 col-xs-10" v-if="totalPointRank != null">
       <span class="text-h6">评分总榜</span>
       <q-list bordered separator dense>
         <template v-for="(value, index) in totalPointRank">
@@ -14,7 +14,7 @@
       </q-list>
     </div>
 
-    <div class="col-2" v-if="heatRank != null">
+    <div class="col-2 col-xs-10" v-if="heatRank != null">
       <span class="text-h6">人气总榜</span>
       <q-list bordered separator dense>
         <template v-for="(value, index) in heatRank">
@@ -28,7 +28,7 @@
       </q-list>
     </div>
 
-    <div class="col-2" v-if="costPerformanceRank != null">
+    <div class="col-2 col-xs-10" v-if="costPerformanceRank != null">
       <span class="text-h6"
         >性价比榜<q-tooltip
           anchor="top middle"
@@ -50,7 +50,7 @@
       </q-list>
     </div>
 
-    <div class="col-4">
+    <div class="col-4 col-xs-12">
       <div class="row">
         <span class="text-h6">总共花费{{ totalCost }}元</span>
       </div>

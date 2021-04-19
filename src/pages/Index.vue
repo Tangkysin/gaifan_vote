@@ -1,27 +1,49 @@
 <template>
-  <q-page class="row">
+  <q-page class="row justify-around">
+    <div class="col-md-2 col-xs-10 cloumn q-gutter-y-sm">
+      <q-scroll-area
+        style="height: 800px; "
+        :bar-style="{
+          right: '1px',
+          borderRadius: '1px',
+          width: '2px',
+          opacity: 1
+        }"
+      >
+        <div :key="index" v-for="(c, index) in conf">
+          <q-item clickable v-ripple @click="clickItem(c.id)">
+            <q-item-section>
+              <q-item-label>{{ c.gaifan_name }}</q-item-label>
+              <q-item-label caption>{{ c.date }}</q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              人气{{ c.userCount }} 得分{{ c.avg.toFixed(5) }}
+            </q-item-section>
+          </q-item>
+        </div>
+      </q-scroll-area>
+    </div>
+    <div class="col-md-8 ">
+      <q-card v-if="$q.platform.is.desktop" style="height: 600px" flat>
+        <div id="vote_detail_div" class="full-height full-width"></div>
+      </q-card>
+    </div>
 
-      <div class="col-2 cloumn q-ma-xl q-gutter-y-sm">
-        <q-scroll-area style="height: 800px; ">
-          <div :key="index" v-for="(c, index) in conf">
-            <q-item clickable v-ripple @click="clickItem(c.id)">
-              <q-item-section>
-                <q-item-label>{{ c.gaifan_name }}</q-item-label>
-                <q-item-label caption>{{ c.date }}</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                人气{{ c.userCount }} 得分{{ c.avg.toFixed(5) }}
-              </q-item-section>
-            </q-item>
-          </div>
-        </q-scroll-area>
-      </div>
-      <div class="col-8 q-ma-xl">
-        <q-card style="height: 600px" flat>
-          <div id="vote_detail_div" class="full-height full-width"></div>
-        </q-card>
-      </div>
+    <q-dialog v-model="showingChart" no-backdrop-dismiss>
+      <q-card style="width: 90vw; height:400px">
+        <q-card-section class="row items-center">
+          <div
+            id="vote_detail_div_mobile"
+            style="width:400px;height:300px"
+          ></div>
+        </q-card-section>
 
+        <q-card-actions align="right" class="text-primary">
+          <q-btn label="关闭" v-close-popup flat />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <!-- 编辑开发者账号弹窗 end -->
   </q-page>
 </template>
 
@@ -33,7 +55,9 @@ export default {
   data() {
     return {
       conf: null,
-      voteDetailChart: null
+      voteDetailChart: null,
+      voteDetailChartMobile: null,
+      showingChart: false
     };
   },
   methods: {
@@ -107,6 +131,10 @@ export default {
       return 0;
     },
     clickItem(itemId) {
+      if (this.$q.platform.is.mobile) {
+        this.showingChart = true;
+      }
+
       let voteData = this.$store.state.votedata.vote_data[itemId];
       if (voteData) {
         let vdlist = voteData.voteDetailList;
@@ -119,7 +147,7 @@ export default {
         let option = {
           title: {
             show: true,
-            text: voteData.gaifan_name + " ("+voteData.cost+"元)",
+            text: voteData.gaifan_name + " (" + voteData.cost + "元)",
             link: voteData.origin_url,
             subtext: "总投票人数:" + voteData.userCount + " (点击查看原帖)",
             sublink: voteData.origin_url
@@ -129,7 +157,10 @@ export default {
             data: xAxisData
           },
           yAxis: {
-            type: "value"
+            type: "value",
+            axisLabel:{
+                rotate :0
+            }
           },
           series: [
             {
@@ -146,15 +177,33 @@ export default {
             }
           ]
         };
-        let vote_detail_div = document.getElementById("vote_detail_div");
-        if (this.voteDetailChart == null) {
-          this.voteDetailChart = echarts.init(
-            vote_detail_div,
-            {},
-            { renderer: "canvas" }
-          );
+        if (this.$q.platform.is.mobile) {
+          option.yAxis.axisLabel.rotate = 60;
+          let _this = this;
+          setTimeout(() => {
+            let vote_detail_div_mobile = document.getElementById(
+              "vote_detail_div_mobile"
+            );
+            _this.voteDetailChartMobile = null;
+            _this.voteDetailChartMobile = echarts.init(
+              vote_detail_div_mobile,
+              {},
+              { renderer: "canvas" }
+            );
+
+            _this.voteDetailChartMobile.setOption(option);
+          }, 100);
+        } else {
+          let vote_detail_div = document.getElementById("vote_detail_div");
+          if (this.voteDetailChart == null) {
+            this.voteDetailChart = echarts.init(
+              vote_detail_div,
+              {},
+              { renderer: "canvas" }
+            );
+          }
+          this.voteDetailChart.setOption(option);
         }
-        this.voteDetailChart.setOption(option);
       }
     }
   },
