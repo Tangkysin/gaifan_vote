@@ -1,5 +1,18 @@
 [
   {
+    "id": 38,
+    "day": 38,
+    "title": "吃遍盖饭第三十八天",
+    "gaifan_name": "麻辣鱼豆腐盖饭",
+    "date": "2021-04-21",
+    "cost": 11,
+    "origin_url": "https://bbs.hupu.com/42432361.html",
+    "vote_url": "https://bbs.mobileapi.hupu.com/3/7.5.2/bbsintapi/vote/v1/getVoteInfo?voteId=10410015",
+    "userCount": 0,
+    "totalPoint": 0,
+    "avg": 0
+  },
+  {
     "id": 37,
     "day": 37,
     "title": "吃遍盖饭第三十七天",
@@ -15,7 +28,7 @@
   {
     "id": 36,
     "day": 36,
-    "title": "吃遍盖饭第三十四天",
+    "title": "吃遍盖饭第三十六天",
     "gaifan_name": "鱼香肉丝盖饭",
     "date": "2021-04-19",
     "cost": 11,
@@ -28,7 +41,7 @@
   {
     "id": 35,
     "day": 35,
-    "title": "吃遍盖饭第三十四天",
+    "title": "吃遍盖饭第三十五天",
     "gaifan_name": "鱼香肝尖盖饭",
     "date": "2021-04-18",
     "cost": 11,
