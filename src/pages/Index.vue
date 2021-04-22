@@ -1,13 +1,13 @@
 <template>
   <q-page class="row justify-around q-pt-md">
-    <div class="col-md-2 col-xs-10 cloumn q-gutter-y-sm">
+    <div class="col-md-3 col-xs-10 cloumn q-gutter-y-sm">
       <q-scroll-area
-        style="height: 800px; "
+        style="height: 800px"
         :bar-style="{
           right: '1px',
           borderRadius: '1px',
           width: '2px',
-          opacity: 1
+          opacity: 1,
         }"
       >
         <div :key="index" v-for="(c, index) in conf">
@@ -30,11 +30,11 @@
     </div>
 
     <q-dialog v-model="showingChart" no-backdrop-dismiss>
-      <q-card style="width: 90vw; height:400px">
+      <q-card style="width: 90vw; height: 400px">
         <q-card-section class="row items-center">
           <div
             id="vote_detail_div_mobile"
-            style="width:400px;height:300px"
+            style="width: 400px; height: 300px"
           ></div>
         </q-card-section>
 
@@ -48,16 +48,16 @@
 </template>
 
 <script>
-import gaifan_conf from "../assets/conf.json";
-import * as echarts from "echarts";
+import gaifan_conf from '../assets/conf.json';
+import * as echarts from 'echarts';
 export default {
-  name: "PageIndex",
+  name: 'PageIndex',
   data() {
     return {
       conf: null,
       voteDetailChart: null,
       voteDetailChartMobile: null,
-      showingChart: false
+      showingChart: false,
     };
   },
   methods: {
@@ -66,7 +66,7 @@ export default {
         if (this.conf[i].vote_url)
           this.$axios
             .get(this.conf[i].vote_url, {})
-            .then(response => {
+            .then((response) => {
               let responseData = response.data.data;
 
               this.conf[i].userCount = responseData.userCount;
@@ -86,45 +86,45 @@ export default {
 
               this.conf[i].avg =
                 this.conf[i].totalPoint / this.conf[i].userCount;
-              this.$store.commit("votedata/update_vote_data", {
+              this.$store.commit('votedata/update_vote_data', {
                 key: this.conf[i].id,
-                value: this.conf[i]
+                value: this.conf[i],
               });
             })
-            .catch(err => {
+            .catch((err) => {
               console.error(err);
             });
       }
     },
     getContentPoint(content) {
-      if (content.indexOf("十") > -1 || content.indexOf("10") > -1) {
+      if (content.indexOf('十') > -1 || content.indexOf('10') > -1) {
         return 10;
       }
-      if (content.indexOf("一") > -1 || content.indexOf("1") > -1) {
+      if (content.indexOf('一') > -1 || content.indexOf('1') > -1) {
         return 1;
       }
-      if (content.indexOf("二") > -1 || content.indexOf("2") > -1) {
+      if (content.indexOf('二') > -1 || content.indexOf('2') > -1) {
         return 2;
       }
-      if (content.indexOf("三") > -1 || content.indexOf("3") > -1) {
+      if (content.indexOf('三') > -1 || content.indexOf('3') > -1) {
         return 3;
       }
-      if (content.indexOf("四") > -1 || content.indexOf("4") > -1) {
+      if (content.indexOf('四') > -1 || content.indexOf('4') > -1) {
         return 4;
       }
-      if (content.indexOf("五") > -1 || content.indexOf("5") > -1) {
+      if (content.indexOf('五') > -1 || content.indexOf('5') > -1) {
         return 5;
       }
-      if (content.indexOf("六") > -1 || content.indexOf("6") > -1) {
+      if (content.indexOf('六') > -1 || content.indexOf('6') > -1) {
         return 6;
       }
-      if (content.indexOf("七") > -1 || content.indexOf("7") > -1) {
+      if (content.indexOf('七') > -1 || content.indexOf('7') > -1) {
         return 7;
       }
-      if (content.indexOf("八") > -1 || content.indexOf("8") > -1) {
+      if (content.indexOf('八') > -1 || content.indexOf('8') > -1) {
         return 8;
       }
-      if (content.indexOf("九") > -1 || content.indexOf("9") > -1) {
+      if (content.indexOf('九') > -1 || content.indexOf('9') > -1) {
         return 9;
       }
 
@@ -140,76 +140,76 @@ export default {
         let vdlist = voteData.voteDetailList;
         let xAxisData = new Array(vdlist.length);
         let dataArray = new Array(vdlist.length);
-        vdlist.forEach(voteDetailList => {
+        vdlist.forEach((voteDetailList) => {
           xAxisData[voteDetailList.sort - 1] = voteDetailList.content;
           dataArray[voteDetailList.sort - 1] = voteDetailList.optionVoteCount;
         });
         let option = {
           title: {
             show: true,
-            text: voteData.gaifan_name + " (" + voteData.cost + "元)",
+            text: voteData.gaifan_name + ' (' + voteData.cost + '元)',
             link: voteData.origin_url,
-            subtext: "总投票人数:" + voteData.userCount + " (点击查看原帖)",
-            sublink: voteData.origin_url
+            subtext: '总投票人数:' + voteData.userCount + ' (点击查看原帖)',
+            sublink: voteData.origin_url,
           },
           xAxis: {
-            type: "category",
-            data: xAxisData
+            type: 'category',
+            data: xAxisData,
           },
           yAxis: {
-            type: "value",
-            axisLabel:{
-                rotate :0
-            }
+            type: 'value',
+            axisLabel: {
+              rotate: 0,
+            },
           },
           series: [
             {
               data: dataArray,
-              type: "bar",
+              type: 'bar',
               label: {
                 show: true,
-                position: "top"
+                position: 'top',
               },
               showBackground: true,
               backgroundStyle: {
-                color: "rgba(180, 180, 180, 0.2)"
-              }
-            }
-          ]
+                color: 'rgba(180, 180, 180, 0.2)',
+              },
+            },
+          ],
         };
         if (this.$q.platform.is.mobile) {
           option.yAxis.axisLabel.rotate = 60;
           let _this = this;
           setTimeout(() => {
             let vote_detail_div_mobile = document.getElementById(
-              "vote_detail_div_mobile"
+              'vote_detail_div_mobile'
             );
             _this.voteDetailChartMobile = null;
             _this.voteDetailChartMobile = echarts.init(
               vote_detail_div_mobile,
               {},
-              { renderer: "canvas" }
+              { renderer: 'canvas' }
             );
 
             _this.voteDetailChartMobile.setOption(option);
           }, 100);
         } else {
-          let vote_detail_div = document.getElementById("vote_detail_div");
+          let vote_detail_div = document.getElementById('vote_detail_div');
           if (this.voteDetailChart == null) {
             this.voteDetailChart = echarts.init(
               vote_detail_div,
               {},
-              { renderer: "canvas" }
+              { renderer: 'canvas' }
             );
           }
           this.voteDetailChart.setOption(option);
         }
       }
-    }
+    },
   },
   mounted() {
     this.conf = gaifan_conf;
     this.fetchData();
-  }
+  },
 };
 </script>
