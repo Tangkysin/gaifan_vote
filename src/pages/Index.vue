@@ -37,7 +37,6 @@
             style="width: 400px; height: 300px"
           ></div>
         </q-card-section>
-
         <q-card-actions align="right" class="text-primary">
           <q-btn label="关闭" v-close-popup flat />
         </q-card-actions>
@@ -58,6 +57,7 @@ export default {
       voteDetailChart: null,
       voteDetailChartMobile: null,
       showingChart: false,
+      img:""
     };
   },
   methods: {
@@ -134,7 +134,8 @@ export default {
       if (this.$q.platform.is.mobile) {
         this.showingChart = true;
       }
-
+      this.img = this.$store.state.votedata.vote_data[itemId].img
+      console.log(this.img)
       let voteData = this.$store.state.votedata.vote_data[itemId];
       if (voteData) {
         let vdlist = voteData.voteDetailList;
